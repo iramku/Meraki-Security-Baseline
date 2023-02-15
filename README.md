@@ -12,17 +12,14 @@ To use this script, you'll need:
 ## Getting Started
 
 - Clone the repository to your local machine.
-- Install the required dependencies using the following command:
-```
-pip install -r requirements.txt
-```
+- Install the required dependencies 
 - Open the api_keys_org_ids.txt file and add your Meraki Dashboard API key and organization ID in the following format:
 ```
 <api_key>,<org_id>
 ```
 - Run the script using the following command:
 ```
-python meraki_security_baseline.py
+python Meraki-Baseline-Security.py
 ```
 The script will output a table with the following information for each MX firewall in your Meraki organization:
 
