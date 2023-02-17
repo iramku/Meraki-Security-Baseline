@@ -8,11 +8,16 @@ To use this script, you'll need:
 - Python 3.x installed on your computer
 - A Cisco Meraki account
 - API keys for the Meraki Dashboard
+- Python Meraki Library
 
 ## Getting Started
 
 - Clone the repository to your local machine.
 - Install the required dependencies 
+```
+pip install meraki
+pip install prettytable
+```
 - Open the api_keys_org_ids.txt file and add your Meraki Dashboard API key and organization ID in the following format:
 ```
 <api_key>,<org_id>
@@ -29,12 +34,13 @@ The script will output a table with the following information for each MX firewa
 - Anti-malware status
 - Intrusion prevention status
 - Spoof protection status
+- Open Ports from the Internet
 
-| Organization                  | Network                             | License Edition   | Anti-Malware | Intrusion Prevention | Spoof Protection |
-| :---------------------------- | :---------------------------------- | :---------------- | :----------- | :------------------- | :--------------- |
-| Org A                         | Org A Net A                         | Advanced Security | enabled      | prevention           | block            |
-| Org B                         | Org B Net A                         | Advanced Security | enabled      | prevention           | block            |
-| Org C                         | Org C Net A                         | Enterprise        | disabled     | disabled             | log              |
+| Organization                  | Network                             | License Edition   | Anti-Malware | Intrusion Prevention | Spoof Protection | Open Ports       |
+| :---------------------------- | :---------------------------------- | :---------------- | :----------- | :------------------- | :--------------- | :--------------- |
+| Org A                         | Org A Net A                         | Advanced Security | enabled      | prevention           | block            | 80               |
+| Org B                         | Org B Net A                         | Advanced Security | enabled      | prevention           | block            | 25,443           |
+| Org C                         | Org C Net A                         | Enterprise        | disabled     | disabled             | log              | None             |
 
 ## License
 This script is licensed under the GPL-3.0 License. See the LICENSE file for more information.
