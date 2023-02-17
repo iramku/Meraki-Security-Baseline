@@ -13,13 +13,14 @@ with open("api_keys_org_ids.txt", "r") as f:
     lines = f.readlines()
 
 # Create a table header
-table.field_names = ["Organization", "Network", "License Edition", "Anti-Malware", "Intrusion Prevention", "Spoof Protection"]
+table.field_names = ["Organization", "Network", "License Edition", "Anti-Malware", "Intrusion Prevention", "Spoof Protection", "Open Ports From INT"]
 table.align["Organization"] = "l"
 table.align["Network"] = "l"
 table.align["License Edition"] = "l"
 table.align["Anti-Malware"] = "l"
 table.align["Intrusion Prevention"] = "l"
 table.align["Spoof Protection"] = "l"
+table.align["Open Ports From INT"] = "r"
 
 # Loop through each line in the file
 for line in lines:
@@ -75,9 +76,26 @@ for line in lines:
         fw_url_spoof = (fw_url + "firewall//settings")
         firewall_settings = requests.get(fw_url_spoof.format(firewall['id']), headers={'X-Cisco-Meraki-API-Key': api_key}).json()
         spoof_protection_enabled = firewall_settings['spoofingProtection']['ipSourceGuard']['mode']
+
+        # Get port forwarding rules
+        fw_url_port_forwarding = (fw_url + "firewall//portForwardingRules")
+        firewall_rules = requests.get(fw_url_port_forwarding.format(firewall['id']), headers={'X-Cisco-Meraki-API-Key': api_key}).json()
+        
+        # Get the list of open public ports
+        if 'rules' in firewall_rules and firewall_rules['rules']:
+            open_ports = ''
+            for rule in firewall_rules['rules']:
+                 if rule['allowedIps'] == ['any']:
+                    open_ports += str(rule['publicPort']) + ', '
+            if open_ports:
+                    open_ports = open_ports[:-2]  # Remove the last comma and space
+            else:
+                open_ports = 'None' # No open ports found
+        else:
+            open_ports = 'None' # No Port forwarding rules found
         
         # Add rows to the table
-        table.add_row([org_name, network_name, license_edition, anti_malware_enabled, intrusion_prevention_enabled, spoof_protection_enabled ])
+        table.add_row([org_name, network_name, license_edition, anti_malware_enabled, intrusion_prevention_enabled, spoof_protection_enabled, open_ports])
 
 # Print the results
 print (table)
