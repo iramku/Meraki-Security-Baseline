@@ -9,9 +9,8 @@ org_url = 'https://api.meraki.com/api/v1/organizations'
 fw_url = 'https://api.meraki.com/api/v1/networks/{}/appliance/'
 
 # Read the file containing the API keys and org IDs
-with open("C:/MerakiAutomation/api_keys_org_ids.txt", "r") as f:
+with open("api_keys_org_ids.txt", "r") as f:
     lines = f.readlines()
-    print(lines)
 
 # Create a table header
 table.field_names = ["Organization", "Network", "License Edition", "Anti-Malware", "Intrusion Prevention", "Spoof Protection"]
